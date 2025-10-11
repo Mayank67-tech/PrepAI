@@ -52,7 +52,14 @@ function SignUp({setCurrentPage}) {
         navigate("/");
       }
     }
-    
+    catch(error){
+      if(error){
+        setError(error.response.data.message);
+      }
+      else{
+        setError("Something went wrong. Please try again");
+      }
+    }
 
 
 
