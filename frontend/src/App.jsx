@@ -35,7 +35,7 @@ function App() {
         <Toaster
           toastOptions={{
             style: { fontSize: "13px" },
-            
+            success: { icon: '✅' },
             error: { icon: '❌' },
           }}
         />
