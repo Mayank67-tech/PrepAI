@@ -129,10 +129,11 @@ const loginUser = asyncHandler(async (req, res) =>{
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
+    const isProduction = process.env.NODE_ENV === "production";
     const options = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
     }
 
     return res
@@ -164,10 +165,11 @@ const logoutUser = asyncHandler(async(req, res) => {
         }
     )
 
+    const isProduction = process.env.NODE_ENV === "production";
     const options = {
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
         // domain: '.onrender.com' // Uncomment if you want to restrict to your root domain
     }
 
@@ -202,10 +204,11 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             
         }
     
+        const isProduction = process.env.NODE_ENV === "production";
         const options = {
             httpOnly: true,
-            secure: true,
-            sameSite: 'None',
+            secure: isProduction,
+            sameSite: isProduction ? 'None' : 'Lax',
             // domain: '.onrender.com' // Uncomment if you want to restrict to your root domain
         }
     

@@ -81,7 +81,7 @@ const QuestionList = ({ questions, onExplain, onPin, onNote, pinnedIds }) => {
                     <LuSparkles className="mr-2" />
                     Explanation:
                   </div>
-                  <div className="leading-relaxed">
+                  <div className="leading-relaxed whitespace-pre-wrap">
                     {q.answer || (
                       <span className="italic text-amber-50/60 flex items-center">
                         <LuSparkles className="mr-2 text-purple-400/60" />

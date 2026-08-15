@@ -45,9 +45,9 @@ function Dashboard() {
       setLoading(true);
 
       const aiResponse = await axiosInstance.post(API_PATHS.AI.GENERATE_QUESTIONS, {
-        role: newSessionTitle,  
+        role: newSessionTitle,
         experience: newSessionExperience,
-        topicsToFocus: newSessionTopics,
+        topicsToFocus: newSessionTopics.trim() || 'General interview preparation',
         numberOfQuestions: 10,
       });
       console.log("AI Response:", aiResponse.data);
@@ -161,7 +161,7 @@ function Dashboard() {
               <button
                 type="submit"
                 className="w-full py-3 rounded-md bg-black text-white font-semibold text-base hover:bg-gray-900 transition-all cursor-pointer"
-                disabled={loading} onClick={createSession} 
+                disabled={loading}
               >{loading ? 'Creating...' : 'Create Session'}</button>
             </form>
           </div>

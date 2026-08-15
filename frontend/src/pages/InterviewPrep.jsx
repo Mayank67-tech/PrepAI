@@ -95,12 +95,14 @@ const InterviewPrep = () => {
     if (!sessionData) return;
     setIsUpdateLoader(true);
     try {
-      // Generate more questions using AI
+      // Generate more questions using AI, excluding ones already in this session
+      const existingQuestions = (sessionData.questions || []).map(q => q.question).filter(Boolean);
       const aiResponse = await axiosInstance.post(API_PATHS.AI.GENERATE_QUESTIONS, {
         role: sessionData.role,
         experience: sessionData.experience,
         topicsToFocus: sessionData.topicsToFocus,
-        numberOfQuestions: 5
+        numberOfQuestions: 5,
+        existingQuestions
       });
       if (aiResponse.status === 200 && aiResponse.data.data) {
         // Add these questions to the session
