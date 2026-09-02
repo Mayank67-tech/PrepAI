@@ -10,6 +10,18 @@ const createSession = asyncHandler(async (req, res) => {
     const { role, experience, topicsToFocus, description, questions } = req.body;
     const userId = req.user._id;
 
+    if (!Array.isArray(questions) || questions.length === 0) {
+        throw new ApiError(400, "At least one generated question is required");
+    }
+
+    const validQuestions = questions.filter(
+        (question) => question && typeof question.question === "string" && question.question.trim()
+    );
+
+    if (validQuestions.length === 0) {
+        throw new ApiError(400, "Generated questions are empty or invalid");
+    }
+
     const session = await Session.create({
         user: userId,
         role,
@@ -19,7 +31,7 @@ const createSession = asyncHandler(async (req, res) => {
     });
     // returns an array of Promises, we need to wait for all of them to finish
     const questionDocs = await Promise.all(
-        questions.map(async (q) => {
+        validQuestions.map(async (q) => {
             const question = await Question.create({
                 session: session._id,
                 question: q.question,

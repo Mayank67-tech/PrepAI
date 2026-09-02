@@ -26,11 +26,11 @@ const tryGeminiGeneration = async (prompt, fallbackText = "") => {
     }
 
     const candidateModels = [
-        "gemini-flash-latest",
-        "gemini-3.5-flash",
-        "gemini-3.1-flash-lite",
-        "gemini-flash-lite-latest"
-    ];
+    "gemini-flash-latest",
+    "gemini-3.5-flash",
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash-lite"
+];
 
     for (const modelName of candidateModels) {
         try {

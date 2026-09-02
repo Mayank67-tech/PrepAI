@@ -51,8 +51,11 @@ function Dashboard() {
         numberOfQuestions: 10,
       });
       console.log("AI Response:", aiResponse.data);
-      console.log("Generated Questions:", aiResponse.data.data);
-      const generatedQuestions = aiResponse.data.data || [];
+      const generatedQuestions = aiResponse.data?.data;
+      if (!Array.isArray(generatedQuestions) || generatedQuestions.length === 0) {
+        throw new Error("No questions were generated. Please try again.");
+      }
+      console.log("Generated Questions:", generatedQuestions);
       const res = await axiosInstance.post(API_PATHS.SESSION.CREATE, {
         role: newSessionTitle,
         experience: newSessionExperience,
@@ -66,7 +69,7 @@ function Dashboard() {
         navigate(`/interview-prep/${res.data.data._id}`); 
       }
     } catch(error) {
-      toast.error("Error creating session");
+      toast.error(error.response?.data?.message || error.message || "Error creating session");
       console.error("Error creating session:", error);
     } finally {
       setLoading(false);
